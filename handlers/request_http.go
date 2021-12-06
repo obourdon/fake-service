@@ -99,6 +99,8 @@ func (rq *Request) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	resp.Type = "HTTP"
 	resp.URI = r.URL.String()
 	resp.IPAddresses = getIPInfo()
+	resp.Hostname = getHostname()
+	resp.CloudInfos = getCloudInfos()
 
 	// are we injecting errors, if so return the error
 	if er := rq.errorInjector.Do(); er != nil {

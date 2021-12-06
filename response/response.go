@@ -5,11 +5,20 @@ import (
 	"encoding/json"
 )
 
+type CloudInfos struct {
+	Provider         string `json:"provider,omitempty"`
+	InstanceID       string `json:"instance_id,omitempty"`
+	InstanceType     string `json:"instance_type,omitempty"`
+	PrivateIP        string `json:"private_ip,omitempty"`
+	AvailabilityZone string `json:"availability_zone,omitempty"`
+}
+
 // Response defines the type which is returned from the service
 type Response struct {
 	Name          string              `json:"name,omitempty"`
 	URI           string              `json:"uri,omitempty"` // Called URI by downstream
 	Type          string              `json:"type,omitempty"`
+	Hostname      string              `json:"hostname,omitempty"`
 	IPAddresses   []string            `json:"ip_addresses,omitempty"`
 	Path          []string            `json:"path,omitempty"` // Path received by upstream
 	StartTime     string              `json:"start_time,omitempty"`
@@ -21,6 +30,7 @@ type Response struct {
 	UpstreamCalls map[string]Response `json:"upstream_calls,omitempty"`
 	Code          int                 `json:"code"`
 	Error         string              `json:"error,omitempty"`
+	CloudInfos    CloudInfos          `json:"cloud_infos,omitempty"`
 }
 
 // ToJSON converts the response to a JSON string

@@ -2,11 +2,15 @@ package handlers
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/nicholasjackson/fake-service/client"
 	"github.com/nicholasjackson/fake-service/grpc/api"
@@ -18,6 +22,14 @@ import (
 )
 
 const timeFormat = "2006-01-02T15:04:05.000000"
+
+type AWSCloudInfos struct {
+	Provider         string `json:"provider,omitempty"`
+	InstanceID       string `json:"instanceId,omitempty"`
+	InstanceType     string `json:"instanceType,omitempty"`
+	PrivateIP        string `json:"privateIp,omitempty"`
+	AvailabilityZone string `json:"availabilityZone,omitempty"`
+}
 
 func workerHTTP(ctx opentracing.SpanContext, uri string, defaultClient client.HTTP, pr *http.Request, l *logging.Logger, content []byte) (*response.Response, error) {
 	httpReq, _ := http.NewRequest(http.MethodGet, uri, nil)
@@ -163,4 +175,87 @@ func getIPInfo() []string {
 	// cache the result
 	ipAddresses = ips
 	return ips
+}
+
+func getHostname() string {
+	h, _ := os.Hostname()
+	return h
+}
+
+func getURL(url string, headers [][]string) ([]byte, error) {
+	cloudMetdataAPIClient := http.Client{
+		Timeout: time.Second * 2, // Timeout after 2 seconds
+	}
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	for i := range headers {
+		fmt.Println(i)
+		req.Header.Set(headers[i][0], headers[i][1])
+	}
+	res, err := cloudMetdataAPIClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return body, err
+	}
+	return body, nil
+}
+
+func getAzureMetadata() (response.CloudInfos, error) {
+	cInfos := response.CloudInfos{}
+	_, err := getURL(
+		"http://169.254.169.254/metadata/instance?api-version=2020-06-01",
+		[][]string{
+			{"User-Agent", "fake-service"},
+			{"Metadata", "true"},
+		},
+	)
+	if err != nil {
+		return cInfos, nil
+	}
+	return cInfos, nil
+}
+
+func getAWSMetadata() (response.CloudInfos, error) {
+	cInfos := response.CloudInfos{}
+	awsInfos := AWSCloudInfos{}
+	body, err := getURL(
+		"http://169.254.169.254/latest/dynamic/instance-identity/document",
+		[][]string{
+			{"User-Agent", "fake-service"},
+		},
+		)
+	if err != nil {
+		return cInfos, nil
+	}
+	err = json.Unmarshal(body, &awsInfos)
+	if err != nil {
+		return cInfos, err
+	}
+	awsInfos.Provider = "aws"
+	return response.CloudInfos{
+		awsInfos.Provider,
+		awsInfos.InstanceID,
+		awsInfos.InstanceType,
+		awsInfos.PrivateIP,
+		awsInfos.AvailabilityZone,
+	}, nil
+}
+
+func getCloudInfos() response.CloudInfos {
+	ci, err := getAWSMetadata()
+	if err != nil {
+		ci, err = getAzureMetadata()
+		if err != nil {
+			return response.CloudInfos{}
+		}
+	}
+	return ci
 }
