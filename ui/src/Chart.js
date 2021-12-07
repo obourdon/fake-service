@@ -33,13 +33,13 @@ const NodeInnerCustom = ({ node, children, ...otherProps }) => {
       <Row>
         <Col>
     <Container>
-      { node.properties.hostname && (
+      { node.properties.hostname && node.properties.hostname.length > 0 && (
         <Row>
           <Col className="node-key" md={7}>Hostname</Col>
           <Col className="node-value" md={4}>{node.properties.hostname}</Col>
         </Row>
       ) }
-      { node.properties.cloud_infos && (<div>
+      { node.properties.cloud_infos && Object.keys(node.properties.cloud_infos).length > 0 && (<div>
         <Row>
           <Col className="node-key" md={7}>Cloud Provider</Col>
           <Col className="node-value" md={4}>{node.properties.cloud_infos.provider}</Col>
