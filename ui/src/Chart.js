@@ -35,51 +35,51 @@ const NodeInnerCustom = ({ node, children, ...otherProps }) => {
     <Container>
       { node.properties.hostname && node.properties.hostname.length > 0 && (
         <Row>
-          <Col className="node-key" md={7}>Hostname</Col>
-          <Col className="node-value" md={4}>{node.properties.hostname}</Col>
+          <Col className="node-key" md={5}>Hostname</Col>
+          <Col className="node-value" md={6}>{node.properties.hostname}</Col>
         </Row>
       ) }
       { node.properties.cloud_infos && Object.keys(node.properties.cloud_infos).length > 0 && (<div>
         <Row>
-          <Col className="node-key" md={7}>Cloud Provider</Col>
-          <Col className="node-value" md={4}>{node.properties.cloud_infos.provider}</Col>
+          <Col className="node-key" md={5}>Cloud Provider</Col>
+          <Col className="node-value" md={6}>{node.properties.cloud_infos.provider}</Col>
         </Row>
         <Row>
-          <Col className="node-key" md={7}>Instance ID</Col>
-          <Col className="node-value" md={4}>{node.properties.cloud_infos.instance_id}</Col>
+          <Col className="node-key" md={5}>Instance ID</Col>
+          <Col className="node-value" md={6}>{node.properties.cloud_infos.instance_id}</Col>
         </Row>
         <Row>
-          <Col className="node-key" md={7}>Instance Type</Col>
-          <Col className="node-value" md={4}>{node.properties.cloud_infos.instance_type}</Col>
+          <Col className="node-key" md={5}>Instance Type</Col>
+          <Col className="node-value" md={6}>{node.properties.cloud_infos.instance_type}</Col>
         </Row>
         <Row>
-          <Col className="node-key" md={7}>Instance Private IP</Col>
-          <Col className="node-value" md={4}>{node.properties.cloud_infos.private_ip}</Col>
+          <Col className="node-key" md={5}>Instance IP</Col>
+          <Col className="node-value" md={6}>{node.properties.cloud_infos.private_ip}</Col>
         </Row>
         <Row>
-          <Col className="node-key" md={7}>Availability Zone</Col>
-          <Col className="node-value" md={4}>{node.properties.cloud_infos.availability_zone}</Col>
+          <Col className="node-key" md={5}>Availability Zone</Col>
+          <Col className="node-value" md={6}>{node.properties.cloud_infos.availability_zone}</Col>
         </Row>
       </div>) }
       <Row>
-        <Col className="node-key" md={7}>Request URI</Col>
-        <Col className="node-value" md={4}>{node.properties.uri}</Col>
+        <Col className="node-key" md={5}>Request URI</Col>
+        <Col className="node-value" md={6}>{node.properties.uri}</Col>
       </Row>
       <Row>
-        <Col className="node-key" md={7}>IP Address</Col>
-        <Col className="node-value" md={4}>{ips}</Col>
+        <Col className="node-key" md={5}>IP Address</Col>
+        <Col className="node-value" md={6}>{ips}</Col>
       </Row>
       <Row>
-        <Col className="node-key" md={7}>Duration</Col>
-        <Col className="node-value" md={4}>{node.properties.duration}</Col>
+        <Col className="node-key" md={5}>Duration</Col>
+        <Col className="node-value" md={6}>{node.properties.duration}</Col>
       </Row>
       <Row>
-        <Col className="node-key" md={7}>Type</Col>
-        <Col className="node-value" md={4}>{node.properties.type}</Col>
+        <Col className="node-key" md={5}>Type</Col>
+        <Col className="node-value" md={6}>{node.properties.type}</Col>
       </Row>
       <Row>
-        <Col className="node-key" md={7}>Response</Col>
-        <Col className="node-value" md={4}>{node.properties.response}</Col>
+        <Col className="node-key" md={5}>Response</Col>
+        <Col className="node-value" md={6}>{node.properties.response}</Col>
       </Row>
     </Container>
         </Col>
