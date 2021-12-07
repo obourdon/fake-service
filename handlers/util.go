@@ -264,6 +264,9 @@ func retrieveCloudInfos() response.CloudInfos {
 }
 
 func getCloudInfos() response.CloudInfos {
+	if cloud_meta_cache == nil {
+		return response.CloudInfos{}
+	}
 	foo, found := cloud_meta_cache.Get("cloudMetaInfos")
 	if found {
 		return foo.(response.CloudInfos)
