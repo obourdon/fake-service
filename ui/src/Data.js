@@ -11,6 +11,8 @@ function processNode(node, name, parent, level, index, xStart, yStart) {
     id: node.name + "_" + level.toString() + "_" + index,
     properties: {
       name: node.name,
+      hostname: node.hostname,
+      cloud_infos: node.cloud_infos,
       upstream_address: name,
       ip_addresses: node.ip_addresses,
       duration: node.duration,
