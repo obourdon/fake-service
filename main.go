@@ -55,6 +55,7 @@ var listenAddress = env.String("LISTEN_ADDR", false, "0.0.0.0:9090", "IP address
 var allowedOrigins = env.String("ALLOWED_ORIGINS", false, "*", "Comma separated list of allowed origins for CORS requests")
 var allowedHeaders = env.String("ALLOWED_HEADERS", false, "Accept,Accept-Language,Content-Language,Origin,Content-Type", "Comma separated list of allowed headers for cors requests")
 var allowCredentials = env.Bool("ALLOW_CREDENTIALS", false, false, "Are credentials allowed for CORS requests")
+var allowCloudMetadataInfos = env.Bool("ALLOW_CLOUD_METADATA", false, false, "Allow Cloud provider metadata collection, default:false")
 
 // Server configuration
 var serverKeepAlives = env.Bool("HTTP_SERVER_KEEP_ALIVES", false, false, "Enables the HTTP servers handling of keep alives.")
@@ -125,6 +126,8 @@ func main() {
 	env.Parse()
 
 	var sdf tracing.SpanDetailsFunc
+
+	handlers.InitCloudMetadataCache(*allowCloudMetadataInfos)
 
 	// do we need to setup tracing
 	if *zipkinEndpoint != "" {

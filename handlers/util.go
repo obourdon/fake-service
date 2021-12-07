@@ -18,10 +18,13 @@ import (
 	"github.com/nicholasjackson/fake-service/response"
 	"github.com/nicholasjackson/fake-service/worker"
 	opentracing "github.com/opentracing/opentracing-go"
+	"github.com/patrickmn/go-cache"
 	"google.golang.org/grpc/status"
 )
 
 const timeFormat = "2006-01-02T15:04:05.000000"
+
+var cloud_meta_cache *cache.Cache
 
 type AWSCloudInfos struct {
 	Provider         string `json:"provider,omitempty"`
@@ -249,7 +252,7 @@ func getAWSMetadata() (response.CloudInfos, error) {
 	}, nil
 }
 
-func getCloudInfos() response.CloudInfos {
+func retrieveCloudInfos() response.CloudInfos {
 	ci, err := getAWSMetadata()
 	if err != nil {
 		ci, err = getAzureMetadata()
@@ -258,4 +261,23 @@ func getCloudInfos() response.CloudInfos {
 		}
 	}
 	return ci
+}
+
+func getCloudInfos() response.CloudInfos {
+	foo, found := cloud_meta_cache.Get("cloudMetaInfos")
+	if found {
+		return foo.(response.CloudInfos)
+	}
+	newInfos := retrieveCloudInfos()
+	cloud_meta_cache.Set("cloudMetaInfos", newInfos, cache.DefaultExpiration)
+	return newInfos
+}
+
+func InitCloudMetadataCache(gatherCloudMetadata bool) {
+	cloud_meta_cache = cache.New(1*time.Minute, 2*time.Minute)
+	if gatherCloudMetadata {
+		cloud_meta_cache.Set("cloudMetaInfos", retrieveCloudInfos(), cache.DefaultExpiration)
+	} else {
+		cloud_meta_cache.Set("cloudMetaInfos", response.CloudInfos{}, cache.NoExpiration)
+	}
 }
