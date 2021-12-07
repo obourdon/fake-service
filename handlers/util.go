@@ -218,7 +218,7 @@ func getAzureMetadata() (response.CloudInfos, error) {
 		},
 	)
 	if err != nil {
-		return cInfos, nil
+		return cInfos, err
 	}
 	return cInfos, nil
 }
@@ -231,9 +231,9 @@ func getAWSMetadata() (response.CloudInfos, error) {
 		[][]string{
 			{"User-Agent", "fake-service"},
 		},
-		)
+	)
 	if err != nil {
-		return cInfos, nil
+		return cInfos, err
 	}
 	err = json.Unmarshal(body, &awsInfos)
 	if err != nil {
