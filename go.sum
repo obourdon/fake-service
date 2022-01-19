@@ -4,6 +4,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/DataDog/datadog-agent/pkg/obfuscate v0.0.0-20211129110424-6491aa3bf583/go.mod h1:EP9f4GqaDJyP1F5jTNMtzdIpw3JpNs3rMSJOnYywCiw=
 github.com/DataDog/datadog-agent/pkg/obfuscate v0.34.0-rc.2 h1:Dvl8HjPLUAHoPGL2tsKrf2XtcZayF9E7QrMX8w9jRN0=
 github.com/DataDog/datadog-agent/pkg/obfuscate v0.34.0-rc.2/go.mod h1:3ZbzpVXIsh0I4j8PeKNoudvkeicJpfJ9TkET8Kn3MeE=
+github.com/DataDog/datadog-agent/pkg/obfuscate v0.34.0-rc.3 h1:8VBCE7IxDsCk8JzT4MUrFo5VriKoY1y8lTjYjXwDtlg=
+github.com/DataDog/datadog-agent/pkg/obfuscate v0.34.0-rc.3/go.mod h1:3ZbzpVXIsh0I4j8PeKNoudvkeicJpfJ9TkET8Kn3MeE=
 github.com/DataDog/datadog-go v3.4.0+incompatible h1:LZ0OTmlvhCBT0VYUvhGu8Lrc7WqNCj6Zw9HnMi0V6mA=
 github.com/DataDog/datadog-go v3.4.0+incompatible/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=
 github.com/DataDog/datadog-go v4.8.2+incompatible/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=

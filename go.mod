@@ -3,7 +3,7 @@ module github.com/nicholasjackson/fake-service
 go 1.16
 
 require (
-	github.com/DataDog/datadog-agent/pkg/obfuscate v0.34.0-rc.2 // indirect
+	github.com/DataDog/datadog-agent/pkg/obfuscate v0.34.0-rc.3 // indirect
 	github.com/DataDog/datadog-go v4.8.3+incompatible
 	github.com/DataDog/sketches-go v1.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
