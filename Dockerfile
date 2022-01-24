@@ -1,11 +1,14 @@
 FROM alpine:latest as base
 
-RUN apk update && apk add ca-certificates curl && rm -rf /var/cache/apk/*
+RUN apk update && apk add ca-certificates curl nginx supervisor && rm -rf /var/cache/apk/*
 
 # Copy AMD binaries
 FROM base AS image-amd64-
 
 COPY linux/amd64/fake-service /app/fake-service
+COPY supervisord.conf /etc
+COPY nginx.conf /etc/nginx
+COPY nginx-default.conf /etc/nginx/conf.d/default.conf
 RUN chmod +x /app/fake-service
 
 # Copy Arm 6 binaries
@@ -37,4 +40,5 @@ ARG BUILDARCH
 
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM $TARGETARCH $TARGETVARIANT"  
 
-ENTRYPOINT ["/app/fake-service"]
+ENTRYPOINT ["supervisord"]
+CMD ["--nodaemon", "--configuration", "/etc/supervisord.conf"]

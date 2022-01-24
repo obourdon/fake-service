@@ -1,4 +1,4 @@
-DOCKER_REGISTRY ?= docker.io/nicholasjackson
+DOCKER_REGISTRY ?= docker.io/nicholasjackson/
 VERSION=v0.22.7
 CONSULBASE=v1.10.7
 
@@ -45,16 +45,17 @@ build_docker_vm:	build_linux build_arm64
 		--push
 	docker buildx rm multi
 
-build_docker_multi: build_linux build_arm7 build_arm6 build_arm64
+build_docker_multi: build_linux #build_arm7 build_arm6 build_arm64
+	cp supervisord.conf nginx.conf nginx-default.conf bin
 	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 	docker buildx create --name multi || true
 	docker buildx use multi
 	docker buildx inspect --bootstrap
-	docker buildx build --platform linux/arm/v6,linux/arm/v7,linux/arm64,linux/amd64 \
-		-t ${DOCKER_REGISTRY}/fake-service:${VERSION} \
+	docker buildx build --platform linux/amd64 \
+		-t ${DOCKER_REGISTRY}fake-service:${VERSION} \
     -f ./Dockerfile \
     ./bin \
-		--push
+		--load
 	docker buildx rm multi
 
 run_downstream:
