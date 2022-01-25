@@ -1,5 +1,5 @@
-DOCKER_REGISTRY ?= docker.io/nicholasjackson/
-VERSION=v0.22.7
+DOCKER_REGISTRY ?= docker.io/obourdon/
+VERSION=v0.23.2
 CONSULBASE=v1.10.7
 
 protos:
@@ -55,7 +55,7 @@ build_docker_multi: build_linux #build_arm7 build_arm6 build_arm64
 		-t ${DOCKER_REGISTRY}fake-service:${VERSION} \
     -f ./Dockerfile \
     ./bin \
-		--load
+		--push
 	docker buildx rm multi
 
 run_downstream:
