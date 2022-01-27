@@ -66,12 +66,44 @@ const NodeInnerCustom = ({ node, children, ...otherProps }) => {
         <Col className="node-value" lg={8}>{node.properties.uri}</Col>
       </Row>
       <Row>
+        <Col className="node-key" md={4}>Request URI</Col>
+        <Col className="node-value" lg={8}>{node.properties.uri}</Col>
+      </Row>
+      <Row>
+        <Col className="node-key" md={4}>Request URI</Col>
+        <Col className="node-value" lg={8}>{node.properties.uri}</Col>
+      </Row>
+      <Row>
+        <Col className="node-key" md={4}>IP Address</Col>
+        <Col className="node-value" lg={8}>{ips}</Col>
+      </Row>
+      <Row>
+        <Col className="node-key" md={4}>IP Address</Col>
+        <Col className="node-value" lg={8}>{ips}</Col>
+      </Row>
+      <Row>
         <Col className="node-key" md={4}>IP Address</Col>
         <Col className="node-value" lg={8}>{ips}</Col>
       </Row>
       <Row>
         <Col className="node-key" md={4}>Duration</Col>
         <Col className="node-value" lg={8}>{node.properties.duration}</Col>
+      </Row>
+      <Row>
+        <Col className="node-key" md={4}>Duration</Col>
+        <Col className="node-value" lg={8}>{node.properties.duration}</Col>
+      </Row>
+      <Row>
+        <Col className="node-key" md={4}>Duration</Col>
+        <Col className="node-value" lg={8}>{node.properties.duration}</Col>
+      </Row>
+      <Row>
+        <Col className="node-key" md={4}>Type</Col>
+        <Col className="node-value" lg={8}>{node.properties.type}</Col>
+      </Row>
+      <Row>
+        <Col className="node-key" md={4}>Type</Col>
+        <Col className="node-value" lg={8}>{node.properties.type}</Col>
       </Row>
       <Row>
         <Col className="node-key" md={4}>Type</Col>
